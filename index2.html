@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Encuesta Interactiva Completa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .contenedor {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .contenedor img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #00796b;
+    }
+
+    form {
+      text-align: left;
+    }
+
+    .seccion {
+      margin-bottom: 25px;
+    }
+
+    .seccion p {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      padding: 5px 0;
+      font-size: 16px;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    #mensaje {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <img src="encuesta.png" alt="Imagen de encuesta">
+  <h1>Encuesta General</h1>
+  <form onsubmit="enviarEncuesta(); return false;">
+
+    <div class="seccion">
+      <p>¿Cuál es tu comida favorita?</p>
+      <label><input type="radio" name="comida" value="Pizza">Pizza</label>
+      <label><input type="radio" name="comida" value="Hamburguesa">Hamburguesa</label>
+      <label><input type="radio" name="comida" value="Tacos">Tacos</label>
+      <label><input type="radio" name="comida" value="Pasta">Pasta</label>
+    </div>
+
+    <div class="seccion">
+      <p>¿Cuál es tu pasatiempo favorito?</p>
+      <label><input type="radio" name="pasatiempo" value="Leer">Leer</label>
+      <label><input type="radio" name="pasatiempo" value="Jugar videojuegos">Jugar videojuegos</label>
+      <label><input type="radio" name="pasatiempo" value="Deportes">Hacer deportes</label>
+      <label><input type="radio" name="pasatiempo" value="Música">Escuchar música</label>
+    </div>
+
+    <div class="seccion">
+      <p>¿Qué estilo de vestimenta prefieres?</p>
+      <label><input type="radio" name="ropa" value="Deportivo">Deportivo</label>
+      <label><input type="radio" name="ropa" value="Casual">Casual</label>
+      <label><input type="radio" name="ropa" value="Elegante">Elegante</label>
+      <label><input type="radio" name="ropa" value="Urbano">Urbano</label>
+    </div>
+
+    <div class="seccion">
+      <p>¿Qué tipo de música te gusta más?</p>
+      <label><input type="radio" name="musica" value="Pop">Pop</label>
+      <label><input type="radio" name="musica" value="Rock">Rock</label>
+      <label><input type="radio" name="musica" value="Reggaetón">Reggaetón</label>
+      <label><input type="radio" name="musica" value="Clásica">Clásica</label>
+    </div>
+
+    <div class="seccion">
+      <p>¿Cuál es tu animal favorito?</p>
+      <label><input type="radio" name="animal" value="Perro">Perro</label>
+      <label><input type="radio" name="animal" value="Gato">Gato</label>
+      <label><input type="radio" name="animal" value="Delfín">Delfín</label>
+      <label><input type="radio" name="animal" value="Águila">Águila</label>
+    </div>
+
+    <button type="submit">Enviar respuestas</button>
+  </form>
+  <p id="mensaje"></p>
+</div>
+
+<script>
+  function enviarEncuesta() {
+    const preguntas = ["comida", "pasatiempo", "ropa", "musica", "animal"];
+    let respuestas = {};
+    let incompletas = [];
+
+    preguntas.forEach(nombre => {
+      const opciones = document.getElementsByName(nombre);
+      let valor = null;
+      for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].checked) {
+          valor = opciones[i].value;
+          break;
+        }
+      }
+      if (valor) {
+        respuestas[nombre] = valor;
+      } else {
+        incompletas.push(nombre);
+      }
+    });
+
+    const mensaje = document.getElementById("mensaje");
+    if (incompletas.length === 0) {
+      mensaje.innerText = "¡Gracias por responder! Tus respuestas han sido registradas.";
+      console.log("Respuestas:", respuestas);  // Aquí puedes hacer algo con los datos
+    } else {
+      mensaje.innerText = "Por favor contesta todas las preguntas.";
+    }
+  }
+</script>
+
+</body>
+</html>
